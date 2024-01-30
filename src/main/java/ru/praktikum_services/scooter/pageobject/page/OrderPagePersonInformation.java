@@ -20,6 +20,8 @@ public class OrderPagePersonInformation extends BasePage{
     private final By phoneNumber = By.xpath(".//*[@placeholder='* Телефон: на него позвонит курьер']");
     //локатор для кнопки "Далее"
     private final By buttonNext = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    //локатор для самой формы заказа
+    private final By formPanel = By.xpath(".//*[@class='Order_Form__17u6u']");
 
     public OrderPagePersonInformation(WebDriver driver) {
         super(driver);
@@ -40,13 +42,6 @@ public class OrderPagePersonInformation extends BasePage{
     public OrderPagePersonInformation clickAndPutAddress(String address){
         driver.findElement(this.address).click();
         driver.findElement(this.address).sendKeys(address);
-        return this;
-    }
-    //метод для клика и ввода значения в поле "Метро" с помощью Enter
-    public OrderPagePersonInformation clickAndPutMetroStationWithEnter(String metroStation){
-        driver.findElement(this.metroStation).click();
-        driver.findElement(this.metroStation).sendKeys(metroStation);
-        driver.findElement(this.metroStation).sendKeys(Keys.ENTER);
         return this;
     }
     //метод для клика и ввода значения в поле "Метро" с помощью через выпадающий список
@@ -72,5 +67,9 @@ public class OrderPagePersonInformation extends BasePage{
                 .until(ExpectedConditions.elementToBeClickable(buttonNext));
         driver.findElement(buttonNext).click();
         return new OrderPageAboutRent(driver);
+    }
+    //метод проверки отображения панели для ввода личных данных для заказа
+    public boolean isDisplayedFormPanel(){
+        return driver.findElement(formPanel).isDisplayed();
     }
 }
